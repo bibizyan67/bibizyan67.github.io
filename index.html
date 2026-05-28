@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Обучающая игра-викторина</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#121212f0;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background: white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+h1{
+    text-align:center;
+}
+
+#question{
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+.answer-btn{
+    display:block;
+    width:100%;
+    padding:15px;
+    margin:10px 0;
+    border:none;
+    border-radius:8px;
+    background:#4CAF50;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.answer-btn:hover{
+    background:#45a049;
+}
+
+#next-btn{
+    margin-top:20px;
+    padding:12px 20px;
+    font-size:18px;
+    border:none;
+    border-radius:8px;
+    background:#2196F3;
+    color:white;
+    cursor:pointer;
+    display:none;
+}
+
+#result{
+    text-align:center;
+    font-size:24px;
+    margin-top:20px;
+}
+
+@media(max-width:600px){
+    #question{
+        font-size:18px;
+    }
+
+    .answer-btn{
+        font-size:16px;
+        padding:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Игра-викторина по программированию</h1>
+
+    <div id="question"></div>
+
+    <div id="answers"></div>
+
+    <button id="next-btn">Следующий вопрос</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+
+const questions = [
+
+{
+question: "Что такое алгоритм?",
+answers: [
+"Музыкальная программа",
+"Последовательность действий",
+"Компьютер",
+"Интернет"
+],
+correct: 1
+},
+
+{
+question: "Для чего нужен HTML?",
+answers: [
+"Для создания сайтов",
+"Для монтажа видео",
+"Для рисования",
+"Для игр"
+],
+correct: 0
+},
+
+{
+question: "Как называется язык оформления сайта?",
+answers: [
+"Python",
+"Java",
+"CSS",
+"Excel"
+],
+correct: 2
+},
+
+{
+question: "Что делает JavaScript?",
+answers: [
+"Создает интерактивность",
+"Удаляет файлы",
+"Печатает текст",
+"Создает фото"
+],
+correct: 0
+},
+
+{
+question: "Что такое переменная?",
+answers: [
+"Папка",
+"Место хранения данных",
+"Монитор",
+"Браузер"
+],
+correct: 1
+},
+
+{
+question: "Что такое цикл?",
+answers: [
+"Повторение действий",
+"Картинка",
+"Файл",
+"Таблица"
+],
+correct: 0
+},
+
+{
+question: "Что такое браузер?",
+answers: [
+"Язык программирования",
+"Программа для просмотра сайтов",
+"Антивирус",
+"Игра"
+],
+correct: 1
+},
+
+{
+question: "Как называется ошибка в программе?",
+answers: [
+"Баг",
+"Файл",
+"Пиксель",
+"Сайт"
+],
+correct: 0
+},
+
+{
+question: "Что такое программа?",
+answers: [
+"Набор команд для компьютера",
+"Клавиатура",
+"Мышка",
+"Монитор"
+],
+correct: 0
+},
+
+{
+question: "Как называется главная страница сайта?",
+answers: [
+"index.html",
+"photo.png",
+"music.mp3",
+"game.exe"
+],
+correct: 0
+},
+
+{
+question: "Что такое компьютерная сеть?",
+answers: [
+"Соединение компьютеров",
+"Экран",
+"Мышка",
+"Память"
+],
+correct: 0
+},
+
+{
+question: "Для чего нужен интернет?",
+answers: [
+"Для подключения к сети",
+"Для зарядки телефона",
+"Для печати текста",
+"Для музыки"
+],
+correct: 0
+},
+
+{
+question: "Что такое функция?",
+answers: [
+"Команда",
+"Блок кода для выполнения задачи",
+"Картинка",
+"Игра"
+],
+correct: 1
+},
+
+{
+question: "Что такое массив?",
+answers: [
+"Список данных",
+"Кнопка",
+"Браузер",
+"Папка"
+],
+correct: 0
+},
+
+{
+question: "Как называется устройство вывода информации?",
+answers: [
+"Монитор",
+"Процессор",
+"Флешка",
+"Жесткий диск"
+],
+correct: 0
+},
+
+{
+question: "Что такое пароль?",
+answers: [
+"Защита аккаунта",
+"Игра",
+"Файл",
+"Сайт"
+],
+correct: 0
+},
+
+{
+question: "Что делает оператор if?",
+answers: [
+"Проверяет условие",
+"Удаляет файл",
+"Включает компьютер",
+"Запускает музыку"
+],
+correct: 0
+},
+
+{
+question: "Как называется язык программирования?",
+answers: [
+"Python",
+"Monitor",
+"Mouse",
+"Folder"
+],
+correct: 0
+},
+
+{
+question: "Что такое сайт?",
+answers: [
+"Набор веб-страниц",
+"Компьютер",
+"Клавиатура",
+"Провод"
+],
+correct: 0
+},
+
+{
+question: "Что такое база данных?",
+answers: [
+"Хранилище информации",
+"Картинка",
+"Монитор",
+"Игра"
+],
+correct: 0
+}
+
+];
+
+let currentQuestion = 0;
+let score = 0;
+
+const questionElement = document.getElementById("question");
+const answersElement = document.getElementById("answers");
+const nextButton = document.getElementById("next-btn");
+const resultElement = document.getElementById("result");
+
+function showQuestion() {
+
+    answersElement.innerHTML = "";
+    nextButton.style.display = "none";
+
+    const q = questions[currentQuestion];
+
+    questionElement.innerText = q.question;
+
+    q.answers.forEach((answer, index) => {
+
+        const button = document.createElement("button");
+        button.innerText = answer;
+        button.classList.add("answer-btn");
+
+        button.onclick = () => checkAnswer(index);
+
+        answersElement.appendChild(button);
+
+    });
+
+}
+
+function checkAnswer(index){
+
+    const correct = questions[currentQuestion].correct;
+
+    if(index === correct){
+        score++;
+    }
+
+    nextButton.style.display = "block";
+
+    const buttons = document.querySelectorAll(".answer-btn");
+
+    buttons.forEach(button => {
+        button.disabled = true;
+    });
+
+}
+
+nextButton.onclick = () => {
+
+    currentQuestion++;
+
+    if(currentQuestion < questions.length){
+        showQuestion();
+    }
+    else{
+        showResult();
+    }
+
+};
+
+function showResult(){
+
+    questionElement.innerHTML = "";
+    answersElement.innerHTML = "";
+    nextButton.style.display = "none";
+
+    resultElement.innerHTML =
+    "Вы набрали " + score + " из " + questions.length + " баллов!";
+
+}
+
+showQuestion();
+
+</script>
+
+</body>
+</html>
